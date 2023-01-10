@@ -6,21 +6,36 @@ using ZPackage;
 using ZPackage.Helper;
 using Random = UnityEngine.Random;
 using UnityEngine.Pool;
+using ZPackage.Utility;
+using System.Linq;
 
-public class Player : Character
+public class Player : Mb
 {
-
+    List<Vector3> localPoints = new List<Vector3>();
+    public List<Node> Nodes;
+    public Transform nodesParent;
+    MovementForgeRun movement;
     ObjectPool<GameObject> Pool;
     CameraController cameraController;
     SoundManager soundManager;
     UIBar bar;
     URPPP effect;
     int killCount;
-    int enemyCount;
+    public int pointCount = 2;
+    List<Vector2> points = new List<Vector2>();
 
     // Start is called before the first frame update
     void Start()
     {
+        points = PoissonDiscSampling.GeneratePoints(0.5f, new Vector2(4, 4));
+        for (int i = 0; i < points.Count; i++)
+        {
+            points[i] += new Vector2(-2, -2);
+            localPoints.Add(new Vector3(points[i].x, 0, points[i].y));
+        }
+        localPoints.OrderBy(x => Vector3.Distance(x, Vector3.zero));
+
+
         movement = GetComponent<MovementForgeRun>();
         // animationController.OnSpearShoot += SpearShoot;
         soundManager = FindObjectOfType<SoundManager>();
@@ -32,6 +47,39 @@ public class Player : Character
         GameManager.Instance.LevelCompleted += OnGameOver;
         InitPool();
         GameManager.Instance.Coin = 10;
+        Nodes[0].GotoLocalPos(localPoints[0]);
+    }
+    public void AddNode(Node node)
+    {
+        if (!Nodes.Contains(node))
+        {
+            Nodes.Add(node);
+            node.transform.SetParent(nodesParent);
+            node.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = Color.green;
+            node.transform.localRotation = Quaternion.identity;
+            Destroy(node.GetComponent<Rigidbody>());
+            node.GotoLocalPos(localPoints[Nodes.Count]);
+            movement.SetSpeed(1);
+        }
+    }
+    internal void RemoveNode(Node node)
+    {
+        if (Nodes.Contains(node))
+        {
+            Nodes.Remove(node);
+            node.transform.SetParent(null);
+            Rigidbody rb = node.gameObject.AddComponent<Rigidbody>();
+            node.gameObject.layer = 3;
+            // rb.velocity = Vector3.zero;
+        }
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        Node node = other.gameObject.GetComponent<Node>();
+        if (node)
+        {
+            AddNode(node);
+        }
     }
 
     internal void IncreaseKillCount()
@@ -41,10 +89,6 @@ public class Player : Character
 
     private void Update()
     {
-        if (IsAlive)
-        {
-            FindNearestEnemy();
-        }
     }
     [SerializeField] Transform Target = null;
 
@@ -60,13 +104,6 @@ public class Player : Character
                 nearest = item.transform;
                 shortest = Distance;
             }
-        }
-
-        Target = nearest;
-        // movement.LookTarget = Target;
-        if (Target)
-        {
-            animationController.Throw();
         }
     }
 
@@ -105,9 +142,8 @@ public class Player : Character
         //     inventory.AddInventory(collect.gameObject);
         // }
     }
-    public override void Die()
+    public void Die()
     {
-        base.Die();
         GameManager.Instance.GameOver(this, EventArgs.Empty);
     }
 
@@ -121,4 +157,16 @@ public class Player : Character
     {
         // throw new NotImplementedException();
     }
+    private void OnDrawGizmos()
+    {
+        if (localPoints.Count > 0 && localPoints.Count > pointCount)
+        {
+            for (int i = 0; i < pointCount; i++)
+            {
+                Gizmos.DrawSphere(localPoints[i], 0.5f);
+            }
+        }
+    }
+
+
 }

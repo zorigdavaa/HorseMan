@@ -5,7 +5,7 @@ using ZPackage;
 ///<Summary>Forge Run Controller 1<Summary>
 public class MovementForgeRun : Mb
 {
-    public AnimationController animationController;
+    public Player player;
     bool ControlAble;
     [SerializeField] float MaxSpeed = 10;
     [SerializeField] Transform targetPos;
@@ -97,7 +97,14 @@ public class MovementForgeRun : Mb
     public void SetSpeed(float percent)
     {
         speed = MaxSpeed * percent;
-        animationController.SetSpeed(speed / MaxSpeed);
+        foreach (var node in player.Nodes)
+        {
+            node.SetSpeed(speed / MaxSpeed);
+        }
+        print(player.Nodes.Count);
+        
+        //Todo Players Node move
+        // player.SetSpeed(speed / MaxSpeed);
     }
     public float GetSpeed()
     {
