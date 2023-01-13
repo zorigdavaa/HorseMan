@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Slot : MonoBehaviour
 {
-    public Shooter shooter;
+    public ISlotObj Obj;
     // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    public void SetShooter(Shooter incoShooter)
+    public void SetShooter(ISlotObj slotObj)
     {
-        shooter = incoShooter;
-        if (incoShooter)
+        Obj = slotObj;
+        if (slotObj != null)
         {
-            shooter.SetSlot(this);
-            shooter.transform.position = transform.position;
+            Obj.Slot = this;
+            (Obj as MonoBehaviour).transform.position = transform.position;
+            // shooter.SetSlot(this);
+            // shooter.transform.position = transform.position;
         }
     }
 

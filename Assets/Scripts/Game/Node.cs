@@ -6,6 +6,17 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     [SerializeField] AnimationController animationController;
+    [SerializeField] List<GameObject> Models;
+
+    public Slot MySlot { get; set; }
+    public bool IsUpgradeAble
+    {
+        get
+        {
+            return ModelIndex < Models.Count - 1;
+        }
+    }
+    public int ModelIndex { get; set; }
     Vector3 targetLocalPos = Vector3.zero;
     // Start is called before the first frame update
     void Start()
@@ -41,5 +52,12 @@ public class Node : MonoBehaviour
     internal void SetSpeed(float v)
     {
         animationController.SetSpeed(v);
+    }
+
+    public void Upgrade()
+    {
+        Models[ModelIndex].SetActive(false);
+        ModelIndex++;
+        Models[ModelIndex].SetActive(true);
     }
 }

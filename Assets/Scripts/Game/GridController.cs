@@ -10,12 +10,12 @@ public class GridController : Mb
 {
     [SerializeField] List<Slot> Slots;
     Camera cam;
-
     RaycastHit hit;
     Vector3 mouseWorldPos;
     Ray ray;
-    [SerializeField] Shooter draggingObject;
-    [SerializeField] Shooter shooterPF;
+    [SerializeField] Transform draggingObject;
+    ISlotObj draggingObjSlot;
+    [SerializeField] GameObject shooterPF;
     Vector3 dragObjOriginPos, lastDragPos;
     LayerMask roadMask;
     // Start is called before the first frame update
@@ -29,12 +29,12 @@ public class GridController : Mb
     // Update is called once per frame
     void Update()
     {
-        countDown -= Time.deltaTime;
-        if (countDown < 0 && !dragging)
-        {
-            countDown = 2;
-            InstantiatePF();
-        }
+        // countDown -= Time.deltaTime;
+        // if (countDown < 0 && !dragging)
+        // {
+        //     countDown = 2;
+        //     InstantiatePF();
+        // }
 
         if (IsDown)
         {
@@ -46,13 +46,15 @@ public class GridController : Mb
             // Vector3 mousePos = Input.mousePosition;
             // mousePos.z = 6;
             // mouseWorldPos = cam.ScreenToWorldPoint(mousePos);
-            if (draggingObject == null && Physics.Raycast(ray, out hit) && hit.transform.GetComponent<Shooter>())
+            if (draggingObject == null && Physics.Raycast(ray, out hit) && hit.transform.GetComponent<ISlotObj>() != null)
             {
-                draggingObject = hit.transform.GetComponent<Shooter>();
+                draggingObject = hit.transform;
                 dragObjOriginPos = draggingObject.transform.position;
-                draggingObject.GetSlot()?.SetShooter(null);
+                draggingObjSlot = hit.transform.GetComponent<ISlotObj>();
+                draggingObjSlot.Slot?.SetShooter(null);
+                // draggingObject.GetSlot()?.SetShooter(null);
             }
-            else if (draggingObject && Physics.Raycast(ray, out hit, 100, roadMask))
+            else if (draggingObject != null && Physics.Raycast(ray, out hit, 100, roadMask))
             {
                 draggingObject.transform.position = hit.point + Vector3.up;
                 lastDragPos = hit.point;
@@ -60,7 +62,7 @@ public class GridController : Mb
         }
         else if (IsUp)
         {
-            if (draggingObject)
+            if (draggingObject != null)
             {
                 Slot nearestSlot = null;
                 float distance = 100;
@@ -73,20 +75,22 @@ public class GridController : Mb
                         nearestSlot = item;
                     }
                 }
-                if (distance < 1 && nearestSlot.shooter == null)
+                if (distance < 1 && nearestSlot.Obj == null)
                 {
-                    nearestSlot.SetShooter(draggingObject);
+                    nearestSlot.SetShooter(draggingObjSlot);
                 }
-                else if (distance < 1 && nearestSlot.shooter != null && draggingObject.UpgradeAble() && nearestSlot.shooter.GetModelIndex() == draggingObject.GetModelIndex())
+                // else if (distance < 1 && nearestSlot.shooter != null && draggingObject.UpgradeAble() && nearestSlot.shooter.GetModelIndex() == draggingObject.GetModelIndex())
+                else if (distance < 1 && nearestSlot.Obj != null && draggingObjSlot.IsUpgradeAble && nearestSlot.Obj.ModelIndex == draggingObjSlot.ModelIndex)
                 {
-                    nearestSlot.shooter.UpGrade();
+                    nearestSlot.Obj.Upgrade();
                     Destroy(draggingObject.gameObject);
                 }
                 else
                 {
-                    draggingObject.GetSlot()?.SetShooter(draggingObject);
+                    draggingObjSlot.Slot?.SetShooter(draggingObjSlot);
                 }
                 draggingObject = null;
+                draggingObjSlot = null;
             }
 
             dragging = false;
@@ -95,11 +99,11 @@ public class GridController : Mb
 
     private void InstantiatePF()
     {
-        Slot firstFreeSlot = Slots.Where(x => x.shooter == null).FirstOrDefault();
+        Slot firstFreeSlot = Slots.Where(x => x.Obj == null).FirstOrDefault();
         if (firstFreeSlot)
         {
-            Shooter shooter = Instantiate(shooterPF, firstFreeSlot.transform.position, Quaternion.identity);
-            firstFreeSlot.SetShooter(shooter);
+            GameObject shooter = Instantiate(shooterPF, firstFreeSlot.transform.position, Quaternion.identity);
+            firstFreeSlot.SetShooter(shooter.GetComponent<ISlotObj>());
         }
     }
 }
