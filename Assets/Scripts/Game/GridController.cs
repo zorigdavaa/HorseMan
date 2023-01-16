@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using ZPackage;
+using System.Text;
 
 public class GridController : Mb
 {
@@ -105,5 +106,68 @@ public class GridController : Mb
             GameObject shooter = Instantiate(shooterPF, firstFreeSlot.transform.position, Quaternion.identity);
             firstFreeSlot.SetShooter(shooter.GetComponent<ISlotObj>());
         }
+    }
+    public GameObject InstantiatePF(Slot slot)
+    {
+        GameObject shooter = Instantiate(shooterPF, slot.transform.position, Quaternion.identity);
+        slot.SetShooter(shooter.GetComponent<ISlotObj>());
+        return shooter;
+    }
+    public void SaveSlots()
+    {
+        List<SaveSlot> saveSlots = new List<SaveSlot>();
+        foreach (var item in Slots)
+        {
+            // SaveSlot ss = new SaveSlot((item.shooter != null), item.shooter.GetModelIndex(), item.shooter.dam);
+            if (item.Obj != null)
+            {
+                saveSlots.Add(new SaveSlot(true, item.Obj.ModelIndex, 0));
+            }
+            else
+            {
+                saveSlots.Add(new SaveSlot());
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        foreach (var item in saveSlots)
+        {
+            builder.Append(item.hasShooter ? 1 : 0);
+            // builder.Append(",");
+
+            builder.Append(item.curModelIndex);
+            // builder.Append(",");
+
+            builder.Append(item.dam);
+            // builder.Append(",");
+
+        }
+        PlayerPrefs.SetString("list", builder.ToString());
+        // print(builder);
+    }
+    public void GetSaveSlots()
+    {
+        string saveString = PlayerPrefs.GetString("list");
+        print(saveString);
+        List<SaveSlot> saveSlots = new List<SaveSlot>();
+        int stringIndex = 0;
+        for (int i = 0; i < Slots.Count; i++)
+        {
+            saveSlots.Add(new SaveSlot(int.Parse(saveString[stringIndex].ToString()) == 1, int.Parse(saveString[stringIndex + 1].ToString()), int.Parse(saveString[stringIndex + 2].ToString())));
+            // saveSlots[i].hasShooter = int.Parse(saveString[stringIndex].ToString()) == 1;
+            // print(int.Parse(saveString[stringIndex].ToString()));
+            // saveSlots[i].curModelIndex = int.Parse(saveString[stringIndex + 1].ToString());
+            // saveSlots[i].dam = int.Parse(saveString[stringIndex + 2].ToString());
+            stringIndex += 3;
+            if (saveSlots[i].hasShooter)
+            {
+                // print("dd");
+                GameObject shooter = InstantiatePF(Slots[i]);
+                for (int j = 0; j < saveSlots[i].curModelIndex; j++)
+                {
+                    shooter.GetComponent<ISlotObj>().Upgrade();
+                }
+            }
+        }
+
     }
 }

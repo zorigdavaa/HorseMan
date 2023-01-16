@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node : MonoBehaviour, ISlotObj
 {
     [SerializeField] AnimationController animationController;
     [SerializeField] List<GameObject> Models;
-
-    public Slot MySlot { get; set; }
     public bool IsUpgradeAble
     {
         get
@@ -17,6 +15,8 @@ public class Node : MonoBehaviour
         }
     }
     public int ModelIndex { get; set; }
+    public Slot Slot { get; set; }
+
     Vector3 targetLocalPos = Vector3.zero;
     // Start is called before the first frame update
     void Start()
