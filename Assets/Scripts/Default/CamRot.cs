@@ -9,7 +9,7 @@ public class CamRot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = FindObjectOfType<CameraController>().transform;
+        cam = FindObjectOfType<Camera>().transform;
     }
 
     // Update is called once per frame
