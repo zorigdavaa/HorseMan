@@ -4,9 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Weapon
-  - Iron
-  - Collect
+  - Board
   layers:
   - Default
   - TransparentFX

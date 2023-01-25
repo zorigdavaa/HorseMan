@@ -9,7 +9,7 @@ using System.Text;
 
 public class GridController : Mb
 {
-    [SerializeField] List<Slot> Slots;
+    public List<Slot> Slots;
     Camera cam;
     RaycastHit hit;
     Vector3 mouseWorldPos;

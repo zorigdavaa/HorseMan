@@ -100,9 +100,7 @@ public class MovementForgeRun : Mb
         foreach (var node in player.Nodes)
         {
             node.SetSpeed(speed / MaxSpeed);
-        }
-        print(player.Nodes.Count);
-        
+        }        
         //Todo Players Node move
         // player.SetSpeed(speed / MaxSpeed);
     }

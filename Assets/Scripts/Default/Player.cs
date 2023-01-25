@@ -73,12 +73,38 @@ public class Player : Mb
             // rb.velocity = Vector3.zero;
         }
     }
+    internal void RemoveAllNode()
+    {
+        for (int i = 0; i < Nodes.Count; i++)
+        {
+            Nodes[i].transform.SetParent(null);
+            Rigidbody rbNode = Nodes[i].gameObject.AddComponent<Rigidbody>();
+            rbNode.isKinematic = true;
+            Nodes[i].gameObject.layer = 3;
+        }
+        Nodes.Clear();
+    }
     private void OnCollisionEnter(Collision other)
     {
         Node node = other.gameObject.GetComponent<Node>();
         if (node)
         {
             AddNode(node);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Board"))
+        {
+            movement.SetSpeed(0);
+            movement.SetControlAble(false);
+            rb.isKinematic = true;
+            GridController controller = other.GetComponent<GridController>();
+            for (int i = 0; i < Nodes.Count; i++)
+            {
+                controller.Slots[i].SetShooter(Nodes[i]);
+            }
+            RemoveAllNode();
         }
     }
 
@@ -132,15 +158,6 @@ public class Player : Mb
             //release
             // s.GotoPool();
         });
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // Ga collect = other.GetComponent<Collect>();
-        // if (collect)
-        // {
-        //     inventory.AddInventory(collect.gameObject);
-        // }
     }
     public void Die()
     {
