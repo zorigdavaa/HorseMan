@@ -31,7 +31,7 @@ public class Node : MonoBehaviour, ISlotObj
         {
             float t = 0;
             float time = 0;
-            float duration = 1;
+            float duration = 0.3f;
             Vector3 initialPosition = transform.localPosition;
             while (time < duration)
             {

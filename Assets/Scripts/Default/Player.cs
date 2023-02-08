@@ -27,15 +27,17 @@ public class Player : Mb
     // Start is called before the first frame update
     void Start()
     {
-        points = PoissonDiscSampling.GeneratePoints(0.5f, new Vector2(4, 4));
+        points = PoissonDiscSampling.GeneratePoints(0.6f, new Vector2(4, 4));
+        Vector2 CenterOffset = FindNearestCenterOffset(points);
+        print(CenterOffset);
         for (int i = 0; i < points.Count; i++)
         {
-            points[i] += new Vector2(-2, -2);
+            points[i] += new Vector2(-2, -2) + CenterOffset;
             localPoints.Add(new Vector3(points[i].x, 0, points[i].y));
         }
         localPoints.OrderBy(x => Vector3.Distance(x, Vector3.zero));
 
-
+        print(localPoints[0]);
         movement = GetComponent<MovementForgeRun>();
         // animationController.OnSpearShoot += SpearShoot;
         soundManager = FindObjectOfType<SoundManager>();
@@ -48,6 +50,24 @@ public class Player : Mb
         InitPool();
         GameManager.Instance.Coin = 10;
         Nodes[0].GotoLocalPos(localPoints[0]);
+    }
+    public Vector2 FindNearestCenterOffset(List<Vector2> ToFindPoints)
+    {
+        Vector2 nearestPoint = ToFindPoints[0];
+        Vector2 center = new Vector2(2,2);
+        float nearestDistance = Vector2.Distance(center, nearestPoint);
+
+        foreach (Vector2 point in ToFindPoints)
+        {
+            float distance = Vector2.Distance(center, point);
+            if (distance < nearestDistance)
+            {
+                nearestPoint = point;
+                nearestDistance = distance;
+            }
+        }
+
+        return center -  nearestPoint;
     }
     public void AddNode(Node node)
     {
