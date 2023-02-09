@@ -28,11 +28,10 @@ public class Player : Mb
     void Start()
     {
         points = PoissonDiscSampling.GeneratePoints(0.6f, new Vector2(4, 4));
-        Vector2 CenterOffset = FindNearestCenterOffset(points);
-        print(CenterOffset);
+        print(points.Contains(new Vector2(2,2)));
         for (int i = 0; i < points.Count; i++)
         {
-            points[i] += new Vector2(-2, -2) + CenterOffset;
+            points[i] += new Vector2(-2, -2);
             localPoints.Add(new Vector3(points[i].x, 0, points[i].y));
         }
         localPoints.OrderBy(x => Vector3.Distance(x, Vector3.zero));
