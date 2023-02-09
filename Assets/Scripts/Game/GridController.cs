@@ -170,4 +170,9 @@ public class GridController : Mb
         }
 
     }
+
+    internal void ReleaseSlotObjs()
+    {
+        throw new NotImplementedException();
+    }
 }

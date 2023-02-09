@@ -74,7 +74,7 @@ public class Player : Mb
         {
             Nodes.Add(node);
             node.transform.SetParent(nodesParent);
-            node.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = Color.green;
+            node.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = Color.blue;
             node.transform.localRotation = Quaternion.identity;
             Destroy(node.GetComponent<Rigidbody>());
             node.GotoLocalPos(localPoints[Nodes.Count]);
@@ -204,5 +204,8 @@ public class Player : Mb
         }
     }
 
-
+    internal void DoneBoard()
+    {
+        throw new NotImplementedException();
+    }
 }

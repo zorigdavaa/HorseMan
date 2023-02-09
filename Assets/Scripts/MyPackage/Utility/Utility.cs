@@ -41,6 +41,12 @@ namespace Name
             v = rotation * v;
             return pivot + v;
         }
+        public static Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float i)
+        {
+            return 0.5f *
+                   ((2 * p1) + (-p0 + p2) * i + (2 * p0 - 5 * p1 + 4 * p2 - p3) * i * i +
+                    (-p0 + 3 * p1 - 3 * p2 + p3) * i * i * i);
+        }
     }
 }
 

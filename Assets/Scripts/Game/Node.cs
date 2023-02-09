@@ -60,4 +60,9 @@ public class Node : MonoBehaviour, ISlotObj
         ModelIndex++;
         Models[ModelIndex].SetActive(true);
     }
+
+    internal void GoForwardWar()
+    {
+        throw new NotImplementedException();
+    }
 }
