@@ -1764,7 +1764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &978744484
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1799,7 +1799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2018,6 +2018,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 978744484}
     m_Modifications:
+    - target: {fileID: -3084375353600566652, guid: 4cfca8142f2e41d4dabe1e23009a984b,
+        type: 3}
+      propertyPath: type
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1181543309327082881, guid: 4cfca8142f2e41d4dabe1e23009a984b,
         type: 3}
       propertyPath: m_Name
@@ -3073,6 +3078,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5859635848857801607, guid: 34b37a34b393b7d4f892a2195fe382b4,
+        type: 3}
+      propertyPath: BoardMenu
+      value: 
+      objectReference: {fileID: 978744483}
     - target: {fileID: 5859635849490343493, guid: 34b37a34b393b7d4f892a2195fe382b4,
         type: 3}
       propertyPath: m_IsActive

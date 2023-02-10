@@ -124,6 +124,7 @@ public class Player : Mb
                 controller.Slots[i].SetShooter(Nodes[i]);
             }
             RemoveAllNode();
+            Z.CanM.ShowBoardMenu(true);
         }
     }
 
@@ -206,6 +207,6 @@ public class Player : Mb
 
     internal void DoneBoard()
     {
-        throw new NotImplementedException();
+        FindObjectOfType<GridController>().ReleaseSlotObjs();
     }
 }

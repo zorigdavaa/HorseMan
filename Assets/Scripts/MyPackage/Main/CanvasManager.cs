@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class CanvasManager : GenericSingleton<CanvasManager>
 {
-    public GameObject beforeStartMenu, afterLostMenu, afterWinMenu, Coin, Level, Hud;
+    public GameObject beforeStartMenu, afterLostMenu, afterWinMenu, Coin, Level, Hud, BoardMenu;
     [SerializeField] TMP_Text CoinText, ScoreText, ScoreMultipText, LevelText, ThrowCount;
     private void OnEnable()
     {
@@ -62,6 +62,10 @@ public class CanvasManager : GenericSingleton<CanvasManager>
     void ShowAfterLostMenu()
     {
         afterLostMenu.SetActive(true);
+    }
+    public void ShowBoardMenu(bool value)
+    {
+        BoardMenu.SetActive(value);
     }
 
     private void OnLevelCompleted(object sender, LevelCompletedEventArgs e)
