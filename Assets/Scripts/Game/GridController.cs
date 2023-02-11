@@ -173,6 +173,13 @@ public class GridController : Mb
 
     internal void ReleaseSlotObjs()
     {
-        throw new NotImplementedException();
+        foreach (var item in Slots)
+        {
+            if (item.Obj != null)
+            {
+
+                item.Obj.gameObject.GetComponent<Node>().GoForwardWar();
+            }
+        }
     }
 }

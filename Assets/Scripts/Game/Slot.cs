@@ -5,6 +5,7 @@ using UnityEngine;
 public class Slot : MonoBehaviour
 {
     public ISlotObj Obj;
+    public Transform ObjTransForm; // Debuggin purpose only
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,7 @@ public class Slot : MonoBehaviour
     public void SetShooter(ISlotObj slotObj)
     {
         Obj = slotObj;
+        ObjTransForm = slotObj.transform;
         if (slotObj != null)
         {
             Obj.Slot = this;

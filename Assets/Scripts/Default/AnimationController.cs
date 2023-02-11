@@ -88,6 +88,11 @@ public class AnimationController : MonoBehaviour
         // animator.ResetTrigger("down");
         animator.SetTrigger("jump");
     }
+
+    internal void Battle()
+    {
+        animator.SetLayerWeight(1,1);
+    }
 }
 public enum AnimationState
 {

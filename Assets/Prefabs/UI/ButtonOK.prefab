@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1181543309922104420}
   - {fileID: 6119030953050133632}
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -2657445835705734002, guid: b30e8516053fc0d468c11d24d6ea7792, type: 3}
+      - m_Target: {fileID: -3084375353600566652}
         m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
         m_MethodName: Click
         m_Mode: 1
@@ -176,6 +177,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1181543309327082942}
   m_RootOrder: 0
@@ -213,7 +215,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3794550611322748858, guid: 8289f90f671eec140947df93e13029fb, type: 3}
+  m_Sprite: {fileID: 3794550611322748858, guid: 8289f90f671eec140947df93e13029fb,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -251,6 +254,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1181543309327082942}
   m_RootOrder: 1
@@ -293,7 +297,8 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d4241b78c6bdc5b4f81eff3be3658772, type: 2}
-  m_sharedMaterial: {fileID: 7947204448994507998, guid: d4241b78c6bdc5b4f81eff3be3658772, type: 2}
+  m_sharedMaterial: {fileID: 7947204448994507998, guid: d4241b78c6bdc5b4f81eff3be3658772,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

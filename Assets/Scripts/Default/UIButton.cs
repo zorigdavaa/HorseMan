@@ -25,7 +25,8 @@ public class UIButton : MonoBehaviour
                 Z.GM.PlayGame();
                 break;
             case UIButtonType.Done:
-                Z.Player.DoneBoard();
+                print("Done Called");
+                FindObjectOfType<GridController>().ReleaseSlotObjs();
                 break;
                 // case UIButtonType.Banner:
                 //     FindObjectOfType<Admob>().RequestBannerAd();

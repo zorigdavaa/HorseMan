@@ -43,12 +43,6 @@ public class Node : MonoBehaviour, ISlotObj
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     internal void SetSpeed(float v)
     {
         animationController.SetSpeed(v);
@@ -63,6 +57,9 @@ public class Node : MonoBehaviour, ISlotObj
 
     internal void GoForwardWar()
     {
-        throw new NotImplementedException();
+        MovementForgeRun movement = gameObject.AddComponent<MovementForgeRun>();
+        movement.GoToPosition(transform.position + transform.forward * 100, 0.1f);
+        // SetSpeed(1);
+        animationController.Battle();
     }
 }

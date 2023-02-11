@@ -28,7 +28,7 @@ public class Player : Mb
     void Start()
     {
         points = PoissonDiscSampling.GeneratePoints(0.6f, new Vector2(4, 4));
-        print(points.Contains(new Vector2(2,2)));
+        print(points.Contains(new Vector2(2, 2)));
         for (int i = 0; i < points.Count; i++)
         {
             points[i] += new Vector2(-2, -2);
@@ -53,7 +53,7 @@ public class Player : Mb
     public Vector2 FindNearestCenterOffset(List<Vector2> ToFindPoints)
     {
         Vector2 nearestPoint = ToFindPoints[0];
-        Vector2 center = new Vector2(2,2);
+        Vector2 center = new Vector2(2, 2);
         float nearestDistance = Vector2.Distance(center, nearestPoint);
 
         foreach (Vector2 point in ToFindPoints)
@@ -66,7 +66,15 @@ public class Player : Mb
             }
         }
 
-        return center -  nearestPoint;
+        return center - nearestPoint;
+    }
+    public void SetSpeed(float percent)
+    {
+        movement.SetSpeed(percent);
+        foreach (var node in Nodes)
+        {
+            node.SetSpeed(percent);
+        }
     }
     public void AddNode(Node node)
     {
@@ -78,7 +86,8 @@ public class Player : Mb
             node.transform.localRotation = Quaternion.identity;
             Destroy(node.GetComponent<Rigidbody>());
             node.GotoLocalPos(localPoints[Nodes.Count]);
-            movement.SetSpeed(1);
+
+            SetSpeed(1);
         }
     }
     internal void RemoveNode(Node node)
@@ -115,7 +124,7 @@ public class Player : Mb
     {
         if (other.gameObject.CompareTag("Board"))
         {
-            movement.SetSpeed(0);
+            SetSpeed(0);
             movement.SetControlAble(false);
             rb.isKinematic = true;
             GridController controller = other.GetComponent<GridController>();
@@ -186,7 +195,7 @@ public class Player : Mb
 
     private void OnGamePlay(object sender, EventArgs e)
     {
-        movement.SetSpeed(1);
+        SetSpeed(1);
         movement.SetControlAble(true);
     }
 
@@ -203,10 +212,5 @@ public class Player : Mb
                 Gizmos.DrawSphere(localPoints[i], 0.5f);
             }
         }
-    }
-
-    internal void DoneBoard()
-    {
-        FindObjectOfType<GridController>().ReleaseSlotObjs();
     }
 }
