@@ -181,5 +181,6 @@ public class GridController : Mb
                 item.Obj.gameObject.GetComponent<Node>().GoForwardWar();
             }
         }
+        Z.CanM.ShowBoardMenu(false);
     }
 }

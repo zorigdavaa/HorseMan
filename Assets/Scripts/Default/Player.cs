@@ -131,6 +131,7 @@ public class Player : Mb
             for (int i = 0; i < Nodes.Count; i++)
             {
                 controller.Slots[i].SetShooter(Nodes[i]);
+                Nodes[i].transform.rotation = Quaternion.identity;
             }
             RemoveAllNode();
             Z.CanM.ShowBoardMenu(true);
