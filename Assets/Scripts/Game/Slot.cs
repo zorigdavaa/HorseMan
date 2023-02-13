@@ -15,9 +15,9 @@ public class Slot : MonoBehaviour
     public void SetShooter(ISlotObj slotObj)
     {
         Obj = slotObj;
-        ObjTransForm = slotObj.transform;
         if (slotObj != null)
         {
+            ObjTransForm = slotObj.transform;
             Obj.Slot = this;
             Obj.transform.position = transform.position;
             // shooter.SetSlot(this);

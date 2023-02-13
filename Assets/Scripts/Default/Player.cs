@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.Pool;
 using ZPackage.Utility;
 using System.Linq;
+using Cinemachine;
 
 public class Player : Mb
 {
@@ -23,6 +24,8 @@ public class Player : Mb
     int killCount;
     public int pointCount = 2;
     List<Vector2> points = new List<Vector2>();
+    CinemachineVirtualCamera cam;
+    CinemachineTargetGroup targetGroup;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,8 @@ public class Player : Mb
         InitPool();
         GameManager.Instance.Coin = 10;
         Nodes[0].GotoLocalPos(localPoints[0]);
+        cam = FindObjectOfType<CinemachineVirtualCamera>();
+        targetGroup = FindObjectOfType<CinemachineTargetGroup>();
     }
     public Vector2 FindNearestCenterOffset(List<Vector2> ToFindPoints)
     {
@@ -86,7 +91,7 @@ public class Player : Mb
             node.transform.localRotation = Quaternion.identity;
             Destroy(node.GetComponent<Rigidbody>());
             node.GotoLocalPos(localPoints[Nodes.Count]);
-
+            targetGroup.AddMember(node.transform, 1, 1);
             SetSpeed(1);
         }
     }
@@ -98,6 +103,8 @@ public class Player : Mb
             node.transform.SetParent(null);
             Rigidbody rb = node.gameObject.AddComponent<Rigidbody>();
             node.gameObject.layer = 3;
+            targetGroup.RemoveMember(node.transform);
+            FindObjectOfType<Camera>().GetComponent<CinemachineBrain>().enabled = false;
             // rb.velocity = Vector3.zero;
         }
     }
@@ -135,6 +142,7 @@ public class Player : Mb
             }
             RemoveAllNode();
             Z.CanM.ShowBoardMenu(true);
+
         }
     }
 
