@@ -12,7 +12,7 @@ using Cinemachine;
 
 public class Player : Mb
 {
-    List<Vector3> localPoints = new List<Vector3>();
+    // List<Vector3> localPoints = new List<Vector3>();
     public List<Node> Nodes;
     public Transform nodesParent;
     MovementForgeRun movement;
@@ -31,28 +31,26 @@ public class Player : Mb
     // Start is called before the first frame update
     void Start()
     {
-        points = PoissonDiscSampling.GeneratePoints(0.6f, new Vector2(4, 4));
-        print(points.Contains(new Vector2(2, 2)));
-        for (int i = 0; i < points.Count; i++)
-        {
-            points[i] += new Vector2(-2, -2);
-            localPoints.Add(new Vector3(points[i].x, 0, points[i].y));
-        }
-        localPoints.OrderBy(x => Vector3.Distance(x, Vector3.zero));
+        // points = PoissonDiscSampling.GeneratePoints(0.6f, new Vector2(4, 4));
+        // print(points.Contains(new Vector2(2, 2)));
+        // for (int i = 0; i < points.Count; i++)
+        // {
+        //     points[i] += new Vector2(-2, -2);
+        //     localPoints.Add(new Vector3(points[i].x, 0, points[i].y));
+        // }
+        // localPoints.OrderBy(x => Vector3.Distance(x, Vector3.zero));
 
-        print(localPoints[0]);
+        // print(localPoints[0]);
         movement = GetComponent<MovementForgeRun>();
-        // animationController.OnSpearShoot += SpearShoot;
         soundManager = FindObjectOfType<SoundManager>();
         cameraController = FindObjectOfType<CameraController>();
-        // line.positionCount = LineResolution;
         effect = FindObjectOfType<URPPP>();
         GameManager.Instance.GameOverEvent += OnGameOver;
         GameManager.Instance.GamePlay += OnGamePlay;
         GameManager.Instance.LevelCompleted += OnGameOver;
         InitPool();
         GameManager.Instance.Coin = 10;
-        Nodes[0].GotoLocalPos(localPoints[0]);
+        // Nodes[0].GotoLocalPos(localPoints[0]);
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         targetGroup = FindObjectOfType<CinemachineTargetGroup>();
         camera = FindObjectOfType<Camera>();
@@ -92,7 +90,7 @@ public class Player : Mb
             node.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = Color.blue;
             node.transform.localRotation = Quaternion.identity;
             Destroy(node.GetComponent<Rigidbody>());
-            node.GotoLocalPos(localPoints[Nodes.Count]);
+            // node.GotoLocalPos(localPoints[Nodes.Count]);
             targetGroup.AddMember(node.transform, 1, 1);
             SetSpeed(1);
         }
@@ -216,12 +214,12 @@ public class Player : Mb
     }
     private void OnDrawGizmos()
     {
-        if (localPoints.Count > 0 && localPoints.Count > pointCount)
-        {
-            for (int i = 0; i < pointCount; i++)
-            {
-                Gizmos.DrawSphere(localPoints[i], 0.5f);
-            }
-        }
+        // if (localPoints.Count > 0 && localPoints.Count > pointCount)
+        // {
+        //     for (int i = 0; i < pointCount; i++)
+        //     {
+        //         Gizmos.DrawSphere(localPoints[i], 0.5f);
+        //     }
+        // }
     }
 }
