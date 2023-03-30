@@ -26,7 +26,6 @@ public class Player : Mb
     List<Vector2> points = new List<Vector2>();
     CinemachineVirtualCamera cam;
     CinemachineTargetGroup targetGroup;
-    public new Camera camera;
 
     // Start is called before the first frame update
     void Start()
@@ -52,8 +51,6 @@ public class Player : Mb
         GameManager.Instance.Coin = 10;
         // Nodes[0].GotoLocalPos(localPoints[0]);
         cam = FindObjectOfType<CinemachineVirtualCamera>();
-        targetGroup = FindObjectOfType<CinemachineTargetGroup>();
-        camera = FindObjectOfType<Camera>();
     }
     public Vector2 FindNearestCenterOffset(List<Vector2> ToFindPoints)
     {
@@ -142,7 +139,6 @@ public class Player : Mb
             }
             RemoveAllNode();
             Z.CanM.ShowBoardMenu(true);
-            camera.GetComponent<CinemachineBrain>().enabled = false;
         }
     }
 
